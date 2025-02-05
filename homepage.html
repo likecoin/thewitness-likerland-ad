@@ -39,7 +39,7 @@ const images = [
 ].map((classId, index) => {
   const searchParams = new URLSearchParams(window.location.search);
   const utmSource = searchParams.get('utm_source');
-  const url = new URL(`https://api.like.co/likernft/book/purchase/${classId}/new`);
+  const url = new URL(`https://liker.land/nft/class/${classId}`);
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
   url.searchParams.set('utm_source', 'thewitness-homepage');
