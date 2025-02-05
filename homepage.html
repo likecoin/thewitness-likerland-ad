@@ -15,10 +15,10 @@
 <title>Liker Land 書店</title>
 <style>
 body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 a img {
   width: 100%;
@@ -26,8 +26,22 @@ a img {
   display: block;
   border: none;
 }
+a::after {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition-duration: 1500ms;
+  transition: all .4s;
+}
+a:hover::after {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 img {
-  object-fit: contain;
+  object-fit: cover;
 }
 </style>
 </head>
