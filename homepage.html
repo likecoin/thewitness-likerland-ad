@@ -73,6 +73,11 @@ function displayImage(index) {
   const anchorElement = document.createElement('a');
   anchorElement.href = images[index].link;
   anchorElement.target = '_blank';
+  anchorElement.addEventListener('click', () => {
+    gtag('event', 'click_homepage_ad', {
+      'classId': images[index].id,
+    });
+  });
 
   const imgElement = document.createElement('img');
   imgElement.src = images[index].src;
