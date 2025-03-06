@@ -36,10 +36,10 @@ img {
 </head>
 <body>
 <script>
-const images = [
-  'likenft154xhw0qyds5pgvsyc7379lnkyvwqkvv2zvmmh2gn5qrewljeqwys2sju6x',
-  'likenft1ekvx3en9l0640kv9fd5n5hvltwyfl443ymyu2cnhmalvjfy0cdcqqa3l6h',
-].map((classId) => {
+const products = [
+  { classId: 'likenft154xhw0qyds5pgvsyc7379lnkyvwqkvv2zvmmh2gn5qrewljeqwys2sju6x' },
+  { classId: 'likenft1ekvx3en9l0640kv9fd5n5hvltwyfl443ymyu2cnhmalvjfy0cdcqqa3l6h', coupon: 'thewitness' },
+].map(({ classId, coupon }) => {
   const searchParams = new URLSearchParams(window.location.search);
   const utmSource = searchParams.get('utm_source');
   const url = new URL(`https://liker.land/nft/class/${classId}`);
@@ -48,34 +48,37 @@ const images = [
   url.searchParams.set('utm_source', 'thewitness-article');
   url.searchParams.set('price_index', 0);
   url.searchParams.set('from', 'liker_land');
+  if (coupon) {
+    url.searchParams.set('coupon', coupon);
+  }
   return {
     classId,
     link: url.href,
-    src: `${classId}.jpg`
+    imgSrc: `${classId}.jpg`
   };
 });
 
 function displayImage(index) {
   const anchorElement = document.createElement('a');
-  anchorElement.href = images[index].link;
+  anchorElement.href = products[index].link;
   anchorElement.target = '_blank';
   anchorElement.addEventListener('click', () => {
     gtag('event', 'click_article_ad', {
-      'classId': images[index].classId,
+      'classId': products[index].classId,
     });
   });
 
   const imgElement = document.createElement('img');
-  imgElement.src = images[index].src;
+  imgElement.src = products[index].imgSrc;
   anchorElement.appendChild(imgElement);
   document.body.appendChild(anchorElement);
 }
 
-const randomIndex = Math.floor(Math.random() * images.length); // Choose a random index
+const randomIndex = Math.floor(Math.random() * products.length); // Choose a random index
 displayImage(randomIndex);
 
 gtag('event', 'display_article_ad', {
-  'classId': images[randomIndex].classId,
+  'classId': products[randomIndex].classId,
 });
 </script>
 </body>
