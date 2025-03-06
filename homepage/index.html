@@ -18,10 +18,10 @@
 <title>Liker Land 書店</title>
 <style>
 body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 a img {
   width: 100%;
@@ -29,23 +29,37 @@ a img {
   display: block;
   border: none;
 }
+a::after {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition-duration: 1500ms;
+  transition: all .4s;
+}
+a:hover::after {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 img {
-  object-fit: contain;
+  object-fit: cover;
 }
 </style>
 </head>
 <body>
 <script>
 const images = [
-  'likenft154xhw0qyds5pgvsyc7379lnkyvwqkvv2zvmmh2gn5qrewljeqwys2sju6x',
-  'likenft154xhw0qyds5pgvsyc7379lnkyvwqkvv2zvmmh2gn5qrewljeqwys2sju6x',
+  'likenft1d2jhjhysl5630c20575da3e3d8ssjl74jur59kqf5urg73wx36wsfvlvsa',
+  'likenft1ekvx3en9l0640kv9fd5n5hvltwyfl443ymyu2cnhmalvjfy0cdcqqa3l6h',
 ].map((classId, index) => {
   const searchParams = new URLSearchParams(window.location.search);
   const utmSource = searchParams.get('utm_source');
   const url = new URL(`https://liker.land/nft/class/${classId}`);
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
-  url.searchParams.set('utm_source', 'thewitness-article');
+  url.searchParams.set('utm_source', 'thewitness-homepage');
   url.searchParams.set('price_index', 0);
   url.searchParams.set('from', 'liker_land');
   return {
@@ -60,7 +74,7 @@ function displayImage(index) {
   anchorElement.href = images[index].link;
   anchorElement.target = '_blank';
   anchorElement.addEventListener('click', () => {
-    gtag('event', 'click_article_ad', {
+    gtag('event', 'click_homepage_ad', {
       'classId': images[index].id,
     });
   });
@@ -74,7 +88,7 @@ function displayImage(index) {
 const randomIndex = Math.floor(Math.random() * images.length); // Choose a random index
 displayImage(randomIndex);
 
-gtag('event', 'display_article_ad', {
+gtag('event', 'display_homepage_ad', {
   'classId': images[randomIndex].id,
 });
 </script>
