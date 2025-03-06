@@ -39,7 +39,7 @@ img {
 const images = [
   'likenft154xhw0qyds5pgvsyc7379lnkyvwqkvv2zvmmh2gn5qrewljeqwys2sju6x',
   'likenft1ekvx3en9l0640kv9fd5n5hvltwyfl443ymyu2cnhmalvjfy0cdcqqa3l6h',
-].map((classId, index) => {
+].map((classId) => {
   const searchParams = new URLSearchParams(window.location.search);
   const utmSource = searchParams.get('utm_source');
   const url = new URL(`https://liker.land/nft/class/${classId}`);
@@ -49,7 +49,7 @@ const images = [
   url.searchParams.set('price_index', 0);
   url.searchParams.set('from', 'liker_land');
   return {
-    id: index,
+    classId,
     link: url.href,
     src: `${classId}.jpg`
   };
@@ -61,7 +61,7 @@ function displayImage(index) {
   anchorElement.target = '_blank';
   anchorElement.addEventListener('click', () => {
     gtag('event', 'click_article_ad', {
-      'classId': images[index].id,
+      'classId': images[index].classId,
     });
   });
 
@@ -75,7 +75,7 @@ const randomIndex = Math.floor(Math.random() * images.length); // Choose a rando
 displayImage(randomIndex);
 
 gtag('event', 'display_article_ad', {
-  'classId': images[randomIndex].id,
+  'classId': images[randomIndex].classId,
 });
 </script>
 </body>
