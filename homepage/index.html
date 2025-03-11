@@ -59,7 +59,7 @@ const images = [
   const url = new URL(`https://liker.land/nft/class/${classId}`);
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
-  url.searchParams.set('utm_source', 'thewitness-homepage');
+  url.searchParams.set('utm_source', `thewitness-homepage-${classId}`);
   url.searchParams.set('price_index', 0);
   url.searchParams.set('from', 'liker_land');
   return {
