@@ -51,21 +51,27 @@ img {
 <body>
 <script>
 const images = [
-  'likenft1d2jhjhysl5630c20575da3e3d8ssjl74jur59kqf5urg73wx36wsfvlvsa',
-  'likenft1ekvx3en9l0640kv9fd5n5hvltwyfl443ymyu2cnhmalvjfy0cdcqqa3l6h',
-].map((classId) => {
+  { classId: 'likenft195frxfnezgjpl44jtdzr0fl3jqv62aaek9222h6cn8n7xzyhfrgq7wtcnv' },
+  { collectionId: 'col_book_015e407c-98f6-4910-b551-430c2d130712' },
+].map(({ classId, collectionId, coupon }) => {
   const searchParams = new URLSearchParams(window.location.search);
-  const utmSource = searchParams.get('utm_source');
-  const url = new URL(`https://liker.land/nft/class/${classId}`);
+  const isCollection = !!collectionId;
+  const id = isCollection ? collectionId : classId;
+  const url = new URL(`https://liker.land/nft/${isCollection ? `collection` : 'class'}/${id}`);
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
-  url.searchParams.set('utm_source', `thewitness-homepage-${classId}`);
-  url.searchParams.set('price_index', 0);
+  url.searchParams.set('utm_source', `thewitness-homepage-${id}`);
   url.searchParams.set('from', 'liker_land');
+  if (!isCollection) {
+    url.searchParams.set('price_index', 0);
+  }
+  if (coupon) {
+    url.searchParams.set('coupon', coupon);
+  }
   return {
-    classId,
+    id,
     link: url.href,
-    src: `${classId}.jpg`
+    imgSrc: `${id}.jpg`
   };
 });
 
@@ -75,12 +81,12 @@ function displayImage(index) {
   anchorElement.target = '_blank';
   anchorElement.addEventListener('click', () => {
     gtag('event', 'click_homepage_ad', {
-      'classId': images[index].classId,
+      'id': images[index].id,
     });
   });
 
   const imgElement = document.createElement('img');
-  imgElement.src = images[index].src;
+  imgElement.src = images[index].imgSrc;
   anchorElement.appendChild(imgElement);
   document.body.appendChild(anchorElement);
 }
@@ -89,7 +95,7 @@ const randomIndex = Math.floor(Math.random() * images.length); // Choose a rando
 displayImage(randomIndex);
 
 gtag('event', 'display_homepage_ad', {
-  'classId': images[randomIndex].classId,
+  'id': images[randomIndex].id,
 });
 </script>
 </body>
