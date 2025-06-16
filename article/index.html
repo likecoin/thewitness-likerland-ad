@@ -37,13 +37,12 @@ img {
 <body>
 <script>
 const products = [
-  { collectionId: 'col_book_931bb5a0-39e1-472e-963c-d542c9902ab4' },
-  { collectionId: 'col_book_015e407c-98f6-4910-b551-430c2d130712' },
+  { classId: '0x54255b9f281400f8b79c3a9e87dc375072b1c8e0' },
+  { classId: '0xaf2a411cecd60f04bec43090de1cb36bcfaf5bfd' },
 ].map(({ classId, collectionId, coupon }) => {
-  const searchParams = new URLSearchParams(window.location.search);
   const isCollection = !!collectionId;
   const id = isCollection ? collectionId : classId;
-  const url = new URL(`https://liker.land/nft/${isCollection ? `collection` : 'class'}/${id}`);
+  const url = new URL(isCollection ? `https://liker.land/nft/collection/${id}` : `https://3ook.com/store/${id}`);
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
   url.searchParams.set('utm_source', `thewitness-article-${id}`);
