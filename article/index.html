@@ -15,7 +15,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liker Land 書店</title>
+<title>3ook.com</title>
 <style>
 body {
     width: 100vw;
@@ -36,17 +36,22 @@ img {
 </head>
 <body>
 <script>
-const products = [
-  { classId: '0xe808baf86741b1781ce8a721a42e9f1b1bdb24de' },
-].map(({ classId, collectionId, coupon }) => {
-  const isCollection = !!collectionId;
-  const id = isCollection ? collectionId : classId;
-  const url = new URL(isCollection ? `https://liker.land/nft/collection/${id}` : `https://3ook.com/store/${id}`);
+const adItems = [
+  { classId: '0x5068973fbe94878f4c7ab792fd8fcc08c45c273b', imgName: 'plus' },
+  { classId: '0xc052ba8b6ca92b3048f28281f740bbfae815aee0', imgName: 'plus' },
+].map(({ id: adId, urlPathname, classId, coupon, imgName }) => {
+  const id = adId || classId;
+  const url = new URL(`https://3ook.com`);
+  if (urlPathname) {
+    url.pathname = urlPathname;
+  } else if (classId) {
+    url.pathname = `store/${classId}`;
+  }
   url.searchParams.set('utm_medium', 'website');
   url.searchParams.set('utm_campaign', 'thewitness-ad');
   url.searchParams.set('utm_source', `thewitness-article-${id}`);
   url.searchParams.set('from', 'liker_land');
-  if (!isCollection) {
+  if (classId) {
     url.searchParams.set('price_index', 0);
   }
   if (coupon) {
@@ -55,31 +60,31 @@ const products = [
   return {
     id,
     link: url.href,
-    imgSrc: `${id}.jpg`
+    imgSrc: `${imgName || id}.jpg`
   };
 });
 
 function displayImage(index) {
   const anchorElement = document.createElement('a');
-  anchorElement.href = products[index].link;
+  anchorElement.href = adItems[index].link;
   anchorElement.target = '_blank';
   anchorElement.addEventListener('click', () => {
     gtag('event', 'click_article_ad', {
-      'id': products[index].id,
+      'id': adItems[index].id,
     });
   });
 
   const imgElement = document.createElement('img');
-  imgElement.src = products[index].imgSrc;
+  imgElement.src = adItems[index].imgSrc;
   anchorElement.appendChild(imgElement);
   document.body.appendChild(anchorElement);
 }
 
-const randomIndex = Math.floor(Math.random() * products.length); // Choose a random index
+const randomIndex = Math.floor(Math.random() * adItems.length); // Choose a random index
 displayImage(randomIndex);
 
 gtag('event', 'display_article_ad', {
-  'id': products[randomIndex].id,
+  'id': adItems[randomIndex].id,
 });
 </script>
 </body>
